@@ -4,6 +4,8 @@ services:
     image: ufire-nacos
     container_name: ufire-nacos
     hostname: ufire-nacos
+    networks:
+
     restart: always
     #指定服务运行的端口
     ports:

@@ -3,8 +3,16 @@ server:
   tomcat:
     basedir: logs
 spring:
-    redis.maxTotal: 300
-    redis.maxIdle: 8
-    redis.minIdle: 1
-    redis.testOnBorrow: true
-    redis.testOnReturn: true
+  redis:
+    host: 8.136.110.11
+    port: 6380
+    password: 123456
+    database: 14
+    jedis.pool.max-idle: 20
+    jedis.pool.min-idle: 5
+    jedis.pool.max-active: 100
+    jedis.pool.max-wait: 1000
+    jedis.pool:max-active: 20
+    sentinel.master: mymaster
+    sentinel.nodes: 8.136.110.11:26380,8.136.110.11:26381,8.136.110.11:26382
+
