@@ -2,17 +2,29 @@ server:
   port: 8848
   tomcat:
     basedir: logs
+#spring:
+#  redis:
+#    database: 6
+#    max-idle: 20
+#    min-idle: 5
+#    max-active: 100
+#    max-wait: 1000
+#    sentinel.master: mymaster
+#    sentinel.nodes: 8.136.110.11:26380,8.136.110.11:26381,8.136.110.11:26382
+#    password: 123456
 spring:
   redis:
-    port: 6379
     password: 123456
-    cluster:
-      nodes: 172.66.66.2,172.66.66.3,172.66.66.4,
-    database: 14
-    jedis.pool.max-idle: 20
-    jedis.pool.min-idle: 5
-    jedis.pool.max-active: 100
-    jedis.pool.max-wait: 1000
-    jedis.pool:max-active: 20
-    sentinel.master: mymaster
-    sentinel.nodes: 172.66.66.22:26379,172.66.66.23:26379,172.66.66.24:26379,
+    jedis:
+      pool:
+        #最大连接数
+        max-active: 1024
+        #最大阻塞等待时间(负数表示没限制)
+        max-wait: 20000
+        #最大空闲
+        max-idle: 200
+        #最小空闲
+        min-idle: 10
+    sentinel:
+      master: mymaster
+      nodes: 8.136.110.11:26379,8.136.110.11:26380,8.136.110.11:26381

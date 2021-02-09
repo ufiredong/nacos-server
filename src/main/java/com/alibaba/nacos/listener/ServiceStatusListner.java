@@ -13,8 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
@@ -37,13 +39,14 @@ public class ServiceStatusListner {
     @PostConstruct
     public void init() throws Exception {
         // 每次ufire-websocket实例发生上线事件即更新redis
-        Jedis jedis = jedisPool.getResource();
         namingService.subscribe(SERVICE_NAME, new EventListener() {
             @Override
             public void onEvent(Event event) {
+                Jedis jedis = jedisPool.getResource();
                 List<Instance> instances = ((NamingEvent) event).getInstances();
                 jedis.publish(SERVICE_NAME, JSON.toJSONString(instances));
-                System.out.println("监听到服务:"+SERVICE_NAME+" 发生变动"+JSON.toJSONString(instances));
+                jedis.close();
+                System.out.println("监听到服务:" + SERVICE_NAME + " 发生变动" + JSON.toJSONString(instances));
             }
         });
     }
