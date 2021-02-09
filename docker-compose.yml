@@ -5,14 +5,15 @@ services:
     container_name: ufire-nacos
     hostname: ufire-nacos
     networks:
-
+      netwaork:
+        ipv4_address: 172.66.66.66
     restart: always
     #指定服务运行的端口
     ports:
       - "8848:8848"
 networks:
-  ufire-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.19.0.0/16
+  netwaork:
+    external:
+      name: ufire-network
+
+
