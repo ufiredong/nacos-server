@@ -4,9 +4,10 @@ server:
     basedir: logs
 spring:
   redis:
-    host: 8.136.110.11
-    port: 6380
+    port: 6379
     password: 123456
+    cluster:
+      nodes: 172.66.66.2,172.66.66.3,172.66.66.4,
     database: 14
     jedis.pool.max-idle: 20
     jedis.pool.min-idle: 5
@@ -14,5 +15,5 @@ spring:
     jedis.pool.max-wait: 1000
     jedis.pool:max-active: 20
     sentinel.master: mymaster
-    sentinel.nodes: 8.136.110.11:26380,8.136.110.11:26381,8.136.110.11:26382
+    sentinel.nodes: 172.66.66.22,172.66.66.23,172.66.66.24,
 
