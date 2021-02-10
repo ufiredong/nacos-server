@@ -31,7 +31,7 @@ import java.util.*;
 public class ServiceStatusListner {
     private static Logger logger = LoggerFactory.getLogger(ServiceStatusListner.class);
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String,String> redisTemplate;
     @Autowired
     private NamingService namingService;
     private final String SERVICE_NAME = "ufire-websocket";
