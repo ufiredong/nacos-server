@@ -45,11 +45,6 @@ public class ServiceStatusListner {
             @Override
             public void onEvent(Event event) {
                 List<Instance> instances = ((NamingEvent) event).getInstances();
-                for (Instance instance : instances) {
-                    String host = instance.getIp() + instance.getPort();
-                    int hash = HashRingUtil.getHash(host);
-                    redisTemplate.opsForHash().put(SERVICE_NAME, host, hash);
-                }
                 redisTemplate.convertAndSend(SERVICE_NAME, JSON.toJSONString(instances));
                 System.out.println("监听到服务:" + SERVICE_NAME + " 发生变动" + JSON.toJSONString(instances));
             }
