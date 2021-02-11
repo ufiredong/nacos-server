@@ -8,6 +8,7 @@ import com.alibaba.nacos.api.naming.listener.Event;
 import com.alibaba.nacos.api.naming.listener.EventListener;
 import com.alibaba.nacos.api.naming.listener.NamingEvent;
 import com.alibaba.nacos.api.naming.pojo.Instance;
+import com.alibaba.nacos.util.HashRingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ import java.util.*;
 public class ServiceStatusListner {
     private static Logger logger = LoggerFactory.getLogger(ServiceStatusListner.class);
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
     @Autowired
     private NamingService namingService;
     private final String SERVICE_NAME = "ufire-websocket";
@@ -44,6 +45,11 @@ public class ServiceStatusListner {
             @Override
             public void onEvent(Event event) {
                 List<Instance> instances = ((NamingEvent) event).getInstances();
+                for (Instance instance : instances) {
+                    String host = instance.getIp() + instance.getPort();
+                    int hash = HashRingUtil.getHash(host);
+                    redisTemplate.opsForHash().put(SERVICE_NAME, host, hash);
+                }
                 redisTemplate.convertAndSend(SERVICE_NAME, JSON.toJSONString(instances));
                 System.out.println("监听到服务:" + SERVICE_NAME + " 发生变动" + JSON.toJSONString(instances));
             }
