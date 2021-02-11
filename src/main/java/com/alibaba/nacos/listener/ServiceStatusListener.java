@@ -25,12 +25,13 @@ import java.util.*;
  * @time: 2020/12/31 23:40
  */
 @Component
-public class ServiceStatusListner {
-    private static Logger logger = LoggerFactory.getLogger(ServiceStatusListner.class);
+public class ServiceStatusListener {
+    private static Logger logger = LoggerFactory.getLogger(ServiceStatusListener.class);
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
     @Autowired
     private NamingService namingService;
+
     private final String SERVICE_NAME = "ufire-websocket";
 
     //初始化监听服务上下线
@@ -43,7 +44,7 @@ public class ServiceStatusListner {
             @Override
             public void onEvent(Event event) {
                 List<Instance> instances = ((NamingEvent) event).getInstances();
-                redisTemplate.opsForHash().delete(SERVICE_NAME);
+                redisTemplate.delete(SERVICE_NAME);
                 instances.stream().forEach(instance -> {
                     String host = instance.getIp() + ":" + instance.getPort();
                     Integer hash = HashRingUtil.getHash(host);
