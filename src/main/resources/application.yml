@@ -11,13 +11,12 @@ server:
 #    max-wait: 1000
 #    sentinel.master: mymaster
 #    sentinel.nodes: 8.136.110.11:26380,8.136.110.11:26381,8.136.110.11:26382
-#    password: 123456
+#   password: 123456
 #spring:
 #  redis:
 #    host: 8.136.110.11
-#    port: 6381
+#    port: 6380
 #    password: 123456
-
   redis:
     sentinel:
       master: mymaster

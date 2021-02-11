@@ -15,10 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
@@ -50,7 +46,12 @@ public class ServiceStatusListner {
                 instances.stream().forEach(instance -> {
                     String host = instance.getIp() + ":" + instance.getPort();
                     Integer hash = HashRingUtil.getHash(host);
-                    redisTemplate.opsForHash().put(SERVICE_NAME, hash.toString(),host);
+                    System.out.println(host+hash);
+                    try{
+                        redisTemplate.opsForHash().put(SERVICE_NAME, hash.toString(),host);
+                    }catch (Exception e){
+                        System.out.println(e.getMessage()+".+++++");
+                    }
                 });
                 redisTemplate.convertAndSend(SERVICE_NAME, JSON.toJSONString(instances));
                 System.out.println("监听到服务:" + SERVICE_NAME + " 发生变动" + JSON.toJSONString(instances));
