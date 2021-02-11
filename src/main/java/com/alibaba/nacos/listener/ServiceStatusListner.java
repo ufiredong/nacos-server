@@ -39,20 +39,26 @@ public class ServiceStatusListner {
 
     //初始化监听服务上下线
     @PostConstruct
-    public void init() throws Exception {
+    public void init(){
         // 每次ufire-websocket实例发生上线事件即更新redis
-        namingService.subscribe(SERVICE_NAME, new EventListener() {
-            @Override
-            public void onEvent(Event event) {
-                List<Instance> instances = ((NamingEvent) event).getInstances();
-                instances.stream().forEach(instance -> {
-                    String host = instance.getIp() + ":" + instance.getPort();
-                    redisTemplate.opsForHash().put(SERVICE_NAME, host, HashRingUtil.getHash(host));
-                });
-                redisTemplate.convertAndSend(SERVICE_NAME, JSON.toJSONString(instances));
-                System.out.println("监听到服务:" + SERVICE_NAME + " 发生变动" + JSON.toJSONString(instances));
-            }
-        });
+
+        try{
+            namingService.subscribe(SERVICE_NAME, new EventListener() {
+                @Override
+                public void onEvent(Event event) {
+                    List<Instance> instances = ((NamingEvent) event).getInstances();
+                    instances.stream().forEach(instance -> {
+                        String host = instance.getIp() + ":" + instance.getPort();
+                        redisTemplate.opsForHash().put(SERVICE_NAME, host, HashRingUtil.getHash(host));
+                    });
+                    redisTemplate.convertAndSend(SERVICE_NAME, JSON.toJSONString(instances));
+                    System.out.println("监听到服务:" + SERVICE_NAME + " 发生变动" + JSON.toJSONString(instances));
+                }
+            });
+        }catch (Exception e){
+            System.out.println("发生异常"+e.getMessage()+e);
+        }
+
     }
 
     @Bean
