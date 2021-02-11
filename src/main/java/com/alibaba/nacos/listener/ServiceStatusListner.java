@@ -50,7 +50,7 @@ public class ServiceStatusListner {
                 instances.stream().forEach(instance -> {
                     String host = instance.getIp() + ":" + instance.getPort();
                     Integer hash = HashRingUtil.getHash(host);
-                    redisTemplate.opsForHash().put(SERVICE_NAME, host, hash.toString());
+                    redisTemplate.opsForHash().put(SERVICE_NAME, hash.toString(),host);
                 });
                 redisTemplate.convertAndSend(SERVICE_NAME, JSON.toJSONString(instances));
                 System.out.println("监听到服务:" + SERVICE_NAME + " 发生变动" + JSON.toJSONString(instances));
