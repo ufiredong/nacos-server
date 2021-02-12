@@ -9,4 +9,4 @@ ADD  ${JAR_FILE} ufire-nacos.jar
 # 暴露8848端口
 EXPOSE 8848
 # 运行jar包
-ENTRYPOINT ["java","-jar","-Djava.security.egd=file:/dev/.urandom","ufire-nacos.jar"]
+ENTRYPOINT ["java","-jar","-Djava.security.egd=file:/dev/.urandom","ufire-nacos.jar","application-prd.yml"]

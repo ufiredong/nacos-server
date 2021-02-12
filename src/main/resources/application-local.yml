@@ -1,0 +1,9 @@
+server:
+  port: 8848
+  tomcat:
+    basedir: logs
+spring:
+  redis:
+    host: 8.136.110.11
+    port: 6380
+    password: 123456

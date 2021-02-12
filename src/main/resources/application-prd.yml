@@ -1,0 +1,10 @@
+server:
+  port: 8848
+  tomcat:
+    basedir: logs
+spring:
+  redis:
+    sentinel:
+      master: mymaster
+      nodes: 172.66.66.22:26379,172.66.66.23:26380,172.66.66.24:26381
+    password: 123456

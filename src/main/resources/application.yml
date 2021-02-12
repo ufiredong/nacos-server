@@ -2,23 +2,3 @@ server:
   port: 8848
   tomcat:
     basedir: logs
-spring:
-#  redis:
-#    database: 6
-#    max-idle: 20
-#    min-idle: 5
-#    max-active: 100
-#    max-wait: 1000
-#    sentinel.master: mymaster
-#    sentinel.nodes: 8.136.110.11:26380,8.136.110.11:26381,8.136.110.11:26382
-#   password: 123456
-#spring:
-#  redis:
-#    host: 8.136.110.11
-#    port: 6380
-#    password: 123456
-  redis:
-    sentinel:
-      master: mymaster
-      nodes: 172.66.66.22:26379,172.66.66.23:26380,172.66.66.24:26381
-    password: 123456
