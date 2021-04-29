@@ -1,6 +1,7 @@
 package com.alibaba.nacos.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -11,8 +12,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author: fengandong
  * @time: 2021/2/10 22:16
  */
+@Configuration
 public class RedisConfig {
-    @Bean
+    @Bean(name = "redisTemplate")
     public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, String> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);

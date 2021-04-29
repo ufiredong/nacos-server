@@ -38,7 +38,7 @@ public class ServiceStatusListener {
     @PostConstruct
     public void init() throws NacosException {
         // 每次ufire-websocket实例发生上线事件即更新redis
-
+        System.out.println("初始化----------" );
 
         namingService.subscribe(SERVICE_NAME, new EventListener() {
             @Override
