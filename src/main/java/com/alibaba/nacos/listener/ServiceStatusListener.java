@@ -59,7 +59,7 @@ public class ServiceStatusListener {
     @Bean
     public NamingService getNamingService() throws NacosException {
         Properties properties = System.getProperties();
-        properties.setProperty("serverAddr", "8.136.110.11:8848");
+        properties.setProperty("serverAddr", "127.0.0.1:8848");
         properties.setProperty("namespace", "public");
         NamingService naming = NamingFactory.createNamingService(properties);
         return naming;
