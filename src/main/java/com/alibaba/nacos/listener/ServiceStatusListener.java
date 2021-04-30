@@ -29,8 +29,6 @@ public class ServiceStatusListener {
     private static Logger logger = LoggerFactory.getLogger(ServiceStatusListener.class);
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
-    @Autowired
-    private NamingService namingService;
 
     private final String SERVICE_NAME = "ufire-websocket";
 
@@ -38,7 +36,11 @@ public class ServiceStatusListener {
     @PostConstruct
     public void init() throws NacosException {
         // 每次ufire-websocket实例发生上线事件即更新redis
-        System.out.println("初始化----------" );
+        System.out.println("初始化----------");
+        Properties properties = System.getProperties();
+        properties.setProperty("serverAddr", "127.0.0.1:8848");
+        properties.setProperty("namespace", "public");
+        NamingService namingService = NamingFactory.createNamingService(properties);
 
         namingService.subscribe(SERVICE_NAME, new EventListener() {
             @Override
@@ -55,17 +57,5 @@ public class ServiceStatusListener {
             }
         });
     }
-
-    @Bean
-    public NamingService getNamingService() throws NacosException {
-        System.out.println("初始化namingService");
-        Properties properties = System.getProperties();
-        properties.setProperty("serverAddr", "127.0.0.1:8848");
-        properties.setProperty("namespace", "public");
-        NamingService naming = NamingFactory.createNamingService(properties);
-        System.out.println(naming.getServerStatus());
-        return naming;
-    }
-
 
 }
