@@ -56,6 +56,7 @@ public class ServiceStatusListener {
 
     @Bean
     public NamingService getNamingService() throws NacosException {
+        System.out.println("初始化naming");
         Properties properties = System.getProperties();
         properties.setProperty("serverAddr", "127.0.0.1:8848");
         properties.setProperty("namespace", "public");
