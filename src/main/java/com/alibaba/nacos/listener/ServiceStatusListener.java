@@ -60,6 +60,7 @@ public class ServiceStatusListener {
         properties.setProperty("serverAddr", "127.0.0.1:8848");
         properties.setProperty("namespace", "public");
         NamingService naming = NamingFactory.createNamingService(properties);
+        System.out.println(naming.getServerStatus());
         return naming;
     }
 
