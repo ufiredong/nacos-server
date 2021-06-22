@@ -6,7 +6,7 @@ services:
     hostname: ufire-nacos
     networks:
       netwaork:
-        ipv4_address: 172.66.66.66
+        ipv4_address: 172.66.0.10
     restart: always
     #指定服务运行的端口
     ports:
