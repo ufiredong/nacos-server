@@ -43,6 +43,7 @@ public class ServiceStatusListener {
             namingService.subscribe(SERVICE_NAME, new EventListener() {
                 @Override
                 public void onEvent(Event event) {
+                    System.out.println("onEvent");
                     List<Instance> instances = ((NamingEvent) event).getInstances();
                     redisTemplate.delete(SERVICE_NAME);
                     instances.stream().forEach(instance -> {
