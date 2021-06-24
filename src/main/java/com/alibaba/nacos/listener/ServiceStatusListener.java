@@ -28,7 +28,7 @@ import java.util.*;
 public class ServiceStatusListener {
     private static Logger logger = LoggerFactory.getLogger(ServiceStatusListener.class);
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate  redisTemplate;
 
     @Autowired
     private NamingService namingService;
@@ -46,7 +46,8 @@ public class ServiceStatusListener {
                     System.out.println("onEvent");
                     List<Instance> instances = ((NamingEvent) event).getInstances();
                     System.out.println(instances.size());
-                    redisTemplate.delete(SERVICE_NAME);
+                    Boolean delete = redisTemplate.delete(SERVICE_NAME);
+                    System.out.println(delete.booleanValue());
                     System.out.println("delete over");
                     instances.stream().forEach(instance -> {
                         String host = instance.getIp() + ":" + instance.getPort();
