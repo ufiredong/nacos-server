@@ -45,6 +45,7 @@ public class ServiceStatusListener {
                 public void onEvent(Event event) {
                     System.out.println("onEvent");
                     List<Instance> instances = ((NamingEvent) event).getInstances();
+                    System.out.println(instances.size());
                     redisTemplate.delete(SERVICE_NAME);
                     System.out.println("delete over");
                     instances.stream().forEach(instance -> {
