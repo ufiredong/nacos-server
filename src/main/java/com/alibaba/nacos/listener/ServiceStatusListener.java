@@ -37,22 +37,28 @@ public class ServiceStatusListener {
 
     //初始化监听服务上下线
     @PostConstruct
-    public void init() throws NacosException {
-        System.out.println("PostConstruct 执行");
-        namingService.subscribe(SERVICE_NAME, new EventListener() {
-            @Override
-            public void onEvent(Event event) {
-                List<Instance> instances = ((NamingEvent) event).getInstances();
-                redisTemplate.delete(SERVICE_NAME);
-                instances.stream().forEach(instance -> {
-                    String host = instance.getIp() + ":" + instance.getPort();
-                    Integer hash = HashRingUtil.getHash(host);
-                    redisTemplate.opsForHash().put(SERVICE_NAME, hash.toString(), host);
-                });
-                redisTemplate.convertAndSend(SERVICE_NAME, JSON.toJSONString(instances));
-                System.out.println("监听到服务:" + SERVICE_NAME + " 发生变动" + JSON.toJSONString(instances));
-            }
-        });
+    public void init() {
+        try {
+            System.out.println("PostConstruct 执行");
+            namingService.subscribe(SERVICE_NAME, new EventListener() {
+                @Override
+                public void onEvent(Event event) {
+                    List<Instance> instances = ((NamingEvent) event).getInstances();
+                    redisTemplate.delete(SERVICE_NAME);
+                    instances.stream().forEach(instance -> {
+                        String host = instance.getIp() + ":" + instance.getPort();
+                        Integer hash = HashRingUtil.getHash(host);
+                        redisTemplate.opsForHash().put(SERVICE_NAME, hash.toString(), host);
+                    });
+                    redisTemplate.convertAndSend(SERVICE_NAME, JSON.toJSONString(instances));
+                    System.out.println("监听到服务:" + SERVICE_NAME + " 发生变动" + JSON.toJSONString(instances));
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+
     }
 
     @Bean
