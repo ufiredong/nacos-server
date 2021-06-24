@@ -51,7 +51,9 @@ public class ServiceStatusListener {
                     instances.stream().forEach(instance -> {
                         String host = instance.getIp() + ":" + instance.getPort();
                         Integer hash = HashRingUtil.getHash(host);
+                        System.out.println(hash);
                         redisTemplate.opsForHash().put(SERVICE_NAME, hash.toString(), host);
+                        System.out.println("put over");
                     });
                     System.out.println(instances.size());
                     System.out.println("convertAndSend");
