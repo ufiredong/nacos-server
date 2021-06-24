@@ -38,6 +38,7 @@ public class ServiceStatusListener {
     //初始化监听服务上下线
     @PostConstruct
     public void init() throws NacosException {
+        System.out.println("PostConstruct 执行");
         namingService.subscribe(SERVICE_NAME, new EventListener() {
             @Override
             public void onEvent(Event event) {
