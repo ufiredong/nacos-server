@@ -46,8 +46,8 @@ public class ServiceStatusListener {
                     System.out.println("onEvent");
                     List<Instance> instances = ((NamingEvent) event).getInstances();
                     System.out.println(instances.size());
-                  //  Boolean delete = redisTemplate.delete(SERVICE_NAME);
-                  //  System.out.println(delete.booleanValue());
+                    Boolean delete = redisTemplate.delete(SERVICE_NAME);
+                    System.out.println(delete.booleanValue());
                     System.out.println("delete over");
                     instances.stream().forEach(instance -> {
                         String host = instance.getIp() + ":" + instance.getPort();
