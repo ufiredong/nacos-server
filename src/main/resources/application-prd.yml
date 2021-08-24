@@ -4,6 +4,6 @@ server:
     basedir: logs
 spring:
   redis:
-    host: 172.17.0.10
-    port: 6379
+    host: 8.136.110.11
+    port: 6380
     password: 123456

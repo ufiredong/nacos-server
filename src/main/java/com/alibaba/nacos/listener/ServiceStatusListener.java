@@ -13,6 +13,7 @@ import com.alibaba.nacos.util.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -26,12 +27,12 @@ import java.util.*;
  * @time: 2020/12/31 23:40
  */
 @Component
-public class ServiceStatusListener {
+public class ServiceStatusListener implements CommandLineRunner {
     private static Logger logger = LoggerFactory.getLogger(ServiceStatusListener.class);
     private final String SERVICE_NAME = "ufire-websocket";
     //初始化监听服务上下线
-    @PostConstruct
-    public void init() {
+    @Override
+    public void run(String... args) {
         try {
             Properties properties = new Properties();
             properties.setProperty("serverAddr", "8.136.110.11:8848");
