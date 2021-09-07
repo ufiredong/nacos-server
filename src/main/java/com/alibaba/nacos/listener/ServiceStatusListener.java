@@ -35,7 +35,7 @@ public class ServiceStatusListener implements CommandLineRunner {
     public void run(String... args) {
         try {
             Properties properties = new Properties();
-            properties.setProperty("serverAddr", "8.136.110.11:8848");
+            properties.setProperty("serverAddr", "127.0.0.1:8848");
             properties.setProperty("namespace", "public");
             NamingService namingService = NamingFactory.createNamingService(properties);
             RedisTemplate redisTemplate = (RedisTemplate) SpringUtil.getBean("redisTemplate");
